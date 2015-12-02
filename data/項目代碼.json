@@ -1,0 +1,74 @@
+[
+    {
+        "ITEM": "222",
+        "ABBR": "SOX",
+        "DESP": "二氧化硫",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "224",
+        "ABBR": "CO",
+        "DESP": "一氧化碳",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "237",
+        "ABBR": "CO2",
+        "DESP": "二氧化碳",
+        "UNIT": "%"
+    },
+    {
+        "ITEM": "248",
+        "ABBR": "FLOW",
+        "DESP": "排放流率",
+        "UNIT": "mtu"
+    },
+    {
+        "ITEM": "227",
+        "ABBR": "VOC",
+        "DESP": "揮發性有機物",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "259",
+        "ABBR": "TEMP",
+        "DESP": "溫度",
+        "UNIT": "℃"
+    },
+    {
+        "ITEM": "223",
+        "ABBR": "NOX",
+        "DESP": "氮氧化物",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "236",
+        "ABBR": "O2",
+        "DESP": "氧    氣",
+        "UNIT": "%"
+    },
+    {
+        "ITEM": "226",
+        "ABBR": "HCL",
+        "DESP": "氯化氫",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "211",
+        "ABBR": "OPC",
+        "DESP": "不透光率",
+        "UNIT": "%"
+    },
+    {
+        "ITEM": "225",
+        "ABBR": "TRS",
+        "DESP": "總還原硫",
+        "UNIT": "ppm"
+    },
+    {
+        "ITEM": "228",
+        "ABBR": "NMHC",
+        "DESP": "NMHC",
+        "UNIT": "ppm"
+    }
+]
