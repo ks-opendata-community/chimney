@@ -40,8 +40,12 @@ var csvStream = csv({headers:true})
       if(CNOMap[data.CNO] != null){
         var cno = CNOMap[data.CNO];
         data.CNOName = cno["工廠"];
+        data.CNOLat = cno["Lat"];
+        data.CNOLng = cno["Lng"];
       }else{
         data.CNOName = null;
+        data.CNOLat = null;
+        data.CNOLng = null;
       }
 
       if(codeMap[data.ITEM] != null){
