@@ -27,12 +27,17 @@ foreach (glob($rawPath . '/*.csv') AS $csvFile) {
     }
     $targetFile = $targetPath . '/' . date('Ymd', $time) . '.csv';
     if (!file_exists($targetFile)) {
-        copy($csvFile, $targetFile);
+        $c = str_replace(array(' '), array(''), file_get_contents($csvFile));
+        $c = implode(',', array(date('Y-m-d', $time), $time, '', '', '')) . "\n" . $c;
+        file_put_contents($targetFile, $c);
     }
 }
-if($latest[0] > 0) {
-    copy($latest[1], $dataPath . '/' . date('Y/m/Ymd', $time) . '.csv');
-    copy($latest[1], $dataPath . '/latest.csv');
+if ($latest[0] > 0) {
+    $c = str_replace(array(' '), array(''), file_get_contents($latest[1]));
+    $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
+
+    file_put_contents($dataPath . '/' . date('Y/m/Ymd', $time) . '.csv', $c);
+    file_put_contents($dataPath . '/latest.csv', $c);
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
