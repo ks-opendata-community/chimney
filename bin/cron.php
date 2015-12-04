@@ -34,10 +34,12 @@ foreach (glob($rawPath . '/*.csv') AS $csvFile) {
 }
 if ($latest[0] > 0) {
     $c = str_replace(array(' '), array(''), file_get_contents($latest[1]));
-    $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
+    if (!empty($c)) {
+        $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
 
-    file_put_contents($dataPath . '/' . date('Y/m/Ymd', $time) . '.csv', $c);
-    file_put_contents($dataPath . '/latest.csv', $c);
+        file_put_contents($dataPath . '/' . date('Y/m/Ymd', $time) . '.csv', $c);
+        file_put_contents($dataPath . '/latest.csv', $c);
+    }
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
