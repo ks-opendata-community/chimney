@@ -43,7 +43,7 @@ if ($latest[0] > 0) {
         file_put_contents($dataPath . '/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
         file_put_contents($dataPath . '/latest.csv', $c);
 
-        $obj->getDay($currentTime, $latest[0]);
+        $obj->getDay($latest[0]);
     }
 }
 
