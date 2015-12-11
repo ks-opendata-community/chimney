@@ -131,6 +131,7 @@ class CemsTaichung {
                 fputcsv($fh, $line);
             }
         }
+        fclose($fh);
     }
 
 }

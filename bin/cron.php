@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/libs.php';
+$obj = new CemsTaichung();
+
 $rootPath = dirname(__DIR__);
 $rawPath = '/var/www/clients/client0/web8/web';
 $dataPath = $rootPath . '/data/daily';
@@ -37,8 +40,10 @@ if ($latest[0] > 0) {
     if (!empty($c)) {
         $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
 
-        file_put_contents($dataPath . '/' . date('Y/m/Ymd', $time) . '.csv', $c);
+        file_put_contents($dataPath . '/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
         file_put_contents($dataPath . '/latest.csv', $c);
+
+        $obj->getDay($currentTime, $latest[0]);
     }
 }
 
