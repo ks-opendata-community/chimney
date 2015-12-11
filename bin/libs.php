@@ -124,6 +124,7 @@ class CemsTaichung {
                 }
             }
         }
+        ksort($timeIndexed);
         $fh = fopen($targetFile, 'w');
         fputcsv($fh, array(date('Y-m-d', $currentTime), $currentTime, '', '', ''));
         foreach ($timeIndexed AS $lines) {
