@@ -2,7 +2,7 @@ ITEM,ABBR,DESP,UNIT
 922,SOX,二氧化硫,ppm
 924,CO,一氧化碳,ppm
 937,CO2,二氧化碳,%
-948,FLOW,排放流率,mtu
+948,FLOW,排放流率,Nm3/hr
 927,VOC,揮發性有機物,ppm
 959,TEMP,溫度,℃
 923,NOX,氮氧化物,ppm
@@ -14,7 +14,7 @@ ITEM,ABBR,DESP,UNIT
 222,SOX,[均值]二氧化硫,ppm
 224,CO,[均值]一氧化碳,ppm
 237,CO2,[均值]二氧化碳,%
-248,FLOW,[均值]排放流率,mtu
+248,FLOW,[均值]排放流率,Nm3/hr
 227,VOC,[均值]揮發性有機物,ppm
 259,TEMP,[均值]溫度,℃
 223,NOX,[均值]氮氧化物,ppm

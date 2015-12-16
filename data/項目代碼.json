@@ -21,7 +21,7 @@
         "ITEM": "948",
         "ABBR": "FLOW",
         "DESP": "排放流率",
-        "UNIT": "mtu"
+        "UNIT": "Nm3/hr"
     },
     {
         "ITEM": "927",
@@ -93,7 +93,7 @@
         "ITEM": "248",
         "ABBR": "FLOW",
         "DESP": "[均值]排放流率",
-        "UNIT": "mtu"
+        "UNIT": "Nm3/hr"
     },
     {
         "ITEM": "227",
