@@ -150,33 +150,6 @@ class CemsYilan {
     }
 
     public function getDay($currentTime) {
-        /*
-         * from http://stackoverflow.com/questions/895786/how-to-get-the-cookies-from-a-php-curl-into-a-variable
-         */
-        $ch = curl_init('http://cems.ilepb.gov.tw/OpenData/');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        $result = curl_exec($ch);
-        preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
-        $cookies = array();
-        foreach ($matches[1] as $item) {
-            $cookies[] = $item;
-        }
-        $cookie = implode('; ', $cookies);
-        $opts = array(
-            'http' => array(
-                'method' => "GET",
-                'header' => "Accept-language: en-US,en;q=0.5\r\n"
-                . "Cache-Control: max-age=0\r\n"
-                //. "Connection: keep-alive\r\n"
-                . "Cookie: {$cookie}\r\n"
-                . "Host: cems.ilepb.gov.tw\r\n"
-                . "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
-            )
-        );
-        print_r($opts);
-        $context = stream_context_create($opts);
-
         $dayPath = $this->tmpPath . date('/Y/m/d', $currentTime);
         if (!file_exists($dayPath)) {
             mkdir($dayPath, 0777, true);
@@ -194,14 +167,25 @@ class CemsYilan {
         } else {
             $baseUrl = $this->baseUrl . 'Daily/';
         }
-        //$baseUrl = $this->baseUrl . 'Realtime/';
         foreach ($this->factories AS $factory) {
             $data = array();
             $tmpFile = $dayPath . '/' . $factory;
             if (!file_exists($tmpFile)) {
-                echo 'getting ' . $baseUrl . $factory . '/ALL/' . $dayUrl . '/Csv' . "\n";
-                file_put_contents($tmpFile, file_get_contents($baseUrl . $factory . '/ALL/' . $dayUrl . '/Csv', false, $context));
-                var_dump($http_response_header);
+                $url = $baseUrl . $factory . '/ALL/' . $dayUrl . '/Csv';
+                error_log("getting {$url}");
+                $curl = curl_init($url);
+                curl_setopt($curl, CURLOPT_REFERER, 'http://cems.ilepb.gov.tw/OpenData/');
+                curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+                curl_setopt($curl, CURLOPT_COOKIESESSION, true);
+                curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36');
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_HEADER, 1);
+                $response = curl_exec($curl);
+                $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+                $header = substr($response, 0, $header_size);
+                $content = substr($response, $header_size);
+                error_log("getting {$header}");
+                file_put_contents($tmpFile, $content);
             }
             $tmpFh = fopen($tmpFile, 'r');
             fgetcsv($tmpFh, 2048);
@@ -229,9 +213,9 @@ class CemsYilan {
                     $line[5],
                 );
             }
-            sleep(2);
         }
         ksort($timeIndexed);
+        error_log("writing {$targetFile}");
         $fh = fopen($targetFile, 'w');
         fputcsv($fh, array(date('Y-m-d', $currentTime), $currentTime, '', '', ''));
         foreach ($timeIndexed AS $lines) {
