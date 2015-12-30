@@ -1,7 +1,8 @@
 <?php
 
 require_once __DIR__ . '/libs.php';
-$obj = new CemsTaichung();
+$objTaichung = new CemsTaichung();
+$objYilan = new CemsYilan();
 
 $rootPath = dirname(__DIR__);
 $rawPath = '/var/www/clients/client0/web8/web';
@@ -44,7 +45,8 @@ if ($latest[0] > 0) {
         file_put_contents($dataPath . '/latest.csv', $c);
 
         exec("rm -rf {$rootPath}/tmp");
-        $obj->getDay($latest[0]);
+        $objTaichung->getDay($latest[0]);
+        $objYilan->getDay($latest[0]);
     }
 }
 
