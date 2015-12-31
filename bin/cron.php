@@ -31,6 +31,7 @@ foreach (glob($rawPath . '/*.csv') AS $csvFile) {
     }
     $targetFile = $targetPath . '/' . date('Ymd', $time) . '.csv';
     if (!file_exists($targetFile)) {
+echo $targetFile; exit();
         $c = str_replace(array(' '), array(''), file_get_contents($csvFile));
         $c = implode(',', array(date('Y-m-d', $time), $time, '', '', '')) . "\n" . $c;
         file_put_contents($targetFile, $c);
