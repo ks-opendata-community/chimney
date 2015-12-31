@@ -1,4 +1,5 @@
 <?php
+
 date_default_timezone_set('Asia/Taipei');
 require_once __DIR__ . '/libs.php';
 $objTaichung = new CemsTaichung();
@@ -43,11 +44,10 @@ if ($latest[0] > 0) {
 
         file_put_contents($dataPath . '/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
         file_put_contents($dataPath . '/latest.csv', $c);
-
-        exec("rm -rf {$rootPath}/tmp");
-        $objTaichung->getDay($latest[0]);
-        $objYilan->getDay($latest[0]);
     }
+    exec("rm -rf {$rootPath}/tmp");
+    $objTaichung->getDay($latest[0]);
+    $objYilan->getDay($latest[0]);
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
