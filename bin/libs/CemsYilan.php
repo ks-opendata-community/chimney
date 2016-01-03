@@ -7,7 +7,7 @@ class CemsYilan {
     public $baseUrl = 'http://cems.ilepb.gov.tw/OpenData/API/';
 
     function __construct() {
-        $this->rootPath = dirname(__DIR__);
+        $this->rootPath = dirname(dirname(__DIR__));
         $this->tmpPath = $this->rootPath . '/tmp/yilan';
         $this->dataPath = $this->rootPath . '/data/daily/yilan';
     }
