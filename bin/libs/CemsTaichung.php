@@ -19,7 +19,7 @@ class CemsTaichung {
     public $baseUrl = 'http://220.130.204.202/program/History/Show_Measure_Detail.asp?Date=';
 
     function __construct() {
-        $this->rootPath = dirname(__DIR__);
+        $this->rootPath = dirname(dirname(__DIR__));
         $this->tmpPath = $this->rootPath . '/tmp/taichung';
         $this->dataPath = $this->rootPath . '/data/daily/taichung';
     }
