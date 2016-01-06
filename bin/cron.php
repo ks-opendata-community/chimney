@@ -16,7 +16,7 @@ $latest = array(
     0,
     ''
 );
-foreach (glob($rawPath . '/*.csv') AS $csvFile) {
+foreach (glob($rawPath . '/AVGR*.csv') AS $csvFile) {
     $info = pathinfo($csvFile);
     // AVGR1041201
     $time = mktime(0, 0, 0, substr($info['filename'], 7, 2), substr($info['filename'], 9, 2), substr($info['filename'], 4, 3) + 1911);
