@@ -5,6 +5,7 @@ require_once __DIR__ . '/libs.php';
 $objTaichung = new CemsTaichung();
 $objYilan = new CemsYilan();
 $objTainan = new CemsTainan();
+$objChiayi = new CemsChiayi();
 
 $rootPath = dirname(__DIR__);
 $rawPath = '/var/www/clients/client0/web8/web';
@@ -50,6 +51,7 @@ if ($latest[0] > 0) {
     $objTaichung->getDay($latest[0]);
     $objYilan->getDay($latest[0]);
     $objTainan->getDay($latest[0]);
+    $objChiayi->getDay($latest[0]);
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
