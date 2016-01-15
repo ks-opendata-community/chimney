@@ -4,6 +4,7 @@ date_default_timezone_set('Asia/Taipei');
 require_once __DIR__ . '/libs.php';
 $objTaichung = new CemsTaichung();
 $objYilan = new CemsYilan();
+$objTainan = new CemsTainan();
 
 $rootPath = dirname(__DIR__);
 $rawPath = '/var/www/clients/client0/web8/web';
@@ -48,6 +49,7 @@ if ($latest[0] > 0) {
     exec("rm -rf {$rootPath}/tmp");
     $objTaichung->getDay($latest[0]);
     $objYilan->getDay($latest[0]);
+    $objTainan->getDay($latest[0]);
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
