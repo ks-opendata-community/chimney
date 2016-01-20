@@ -72,6 +72,12 @@
         "UNIT": "ppm"
     },
     {
+        "ITEM": "980",
+        "ABBR": "CMH",
+        "DESP": "排放流率",
+        "UNIT": "CMH"
+    },
+    {
         "ITEM": "222",
         "ABBR": "SOX",
         "DESP": "[均值]二氧化硫",
@@ -142,5 +148,11 @@
         "ABBR": "NMHC",
         "DESP": "[均值]NMHC",
         "UNIT": "ppm"
+    },
+    {
+        "ITEM": "280",
+        "ABBR": "CMH",
+        "DESP": "[均值]排放流率",
+        "UNIT": "CMH"
     }
 ]
