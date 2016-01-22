@@ -84,6 +84,3 @@ class CemsYunlin {
     }
 
 }
-
-$o = new CemsYunlin();
-$o->getDay(time());
