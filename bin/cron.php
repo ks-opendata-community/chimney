@@ -29,7 +29,7 @@ foreach (glob($rawPath . '/AVGR*.csv') AS $csvFile) {
             $csvFile
         );
     }
-    $targetPath = $dataPath . '/' . date('Y/m', $time);
+    $targetPath = $dataPath . '/kaohsiung/' . date('Y/m', $time);
     if (!file_exists($targetPath)) {
         mkdir($targetPath, 0777, true);
     }
@@ -44,7 +44,7 @@ if ($latest[0] > 0) {
     $c = str_replace(array(' '), array(''), file_get_contents($latest[1]));
     $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
 
-    file_put_contents($dataPath . '/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
+    file_put_contents($dataPath . '/kaohsiung/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
     file_put_contents($dataPath . '/latest.csv', $c);
     
     exec("rm -rf {$rootPath}/tmp");
