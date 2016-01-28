@@ -37,8 +37,6 @@ class CemsYilan {
                     error_log("getting {$url}");
                     $curl = curl_init($url);
                     curl_setopt($curl, CURLOPT_REFERER, 'http://cems.ilepb.gov.tw/OpenData/');
-                    curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-                    curl_setopt($curl, CURLOPT_COOKIESESSION, true);
                     curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36/' . uniqid());
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($curl, CURLOPT_HEADER, 1);
