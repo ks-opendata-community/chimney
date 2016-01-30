@@ -7,6 +7,7 @@ $objYilan = new CemsYilan();
 $objTainan = new CemsTainan();
 $objChiayi = new CemsChiayi();
 $objYunlin = new CemsYunlin();
+$objChanghua = new CemsChanghua();
 
 $rootPath = dirname(__DIR__);
 $rawPath = '/var/www/clients/client0/web8/web';
@@ -53,6 +54,7 @@ if ($latest[0] > 0) {
     $objTainan->getDay($latest[0]);
     $objChiayi->getDay($latest[0]);
     $objYunlin->getDay($latest[0]);
+    $objChanghua->getDay($latest[0]);
 }
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
