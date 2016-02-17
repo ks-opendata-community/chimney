@@ -96,6 +96,3 @@ class CemsNewtaipei {
     }
 
 }
-
-$o = new CemsNewtaipei();
-$o->getDay();
