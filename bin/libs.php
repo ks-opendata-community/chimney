@@ -8,3 +8,5 @@ require_once __DIR__ . '/libs/CemsYunlin.php';
 require_once __DIR__ . '/libs/CemsChanghua.php';
 require_once __DIR__ . '/libs/CemsTaoyuan.php';
 require_once __DIR__ . '/libs/CemsNewtaipei.php';
+require_once __DIR__ . '/libs/CemsTaipei.php';
+require_once __DIR__ . '/libs/CemsHsinchu.php';
