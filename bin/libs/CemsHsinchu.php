@@ -73,6 +73,7 @@ class CemsHsinchu {
                                     $timeIndexed[$timeKey] = array();
                                 }
                                 if (!isset($check[$fcode][$cols[0]][$code][$timeKey])) {
+                                    $check[$fcode][$cols[0]][$code][$timeKey] = true;
                                     $timeIndexed[$timeKey][] = array(
                                         $fcode,
                                         $cols[0],

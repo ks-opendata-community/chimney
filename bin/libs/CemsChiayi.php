@@ -40,7 +40,31 @@ class CemsChiayi {
         $dayUrl = $this->baseUrl . $twYear . '/R' . $twYear . '-' . date('n-j', $currentTime) . '.csv';
         //工廠名稱、排放管道、監測項目、時間、測值、測值狀態
         $fh = fopen($dayUrl, 'r');
-        $timeIndexed = array();
+        $timeIndexed = $check = array();
+
+        if (file_exists($targetFile)) {
+            $fh = fopen($targetFile, 'r');
+            fgetcsv($fh, 2048);
+            while ($line = fgetcsv($fh, 2048)) {
+                $timeKey = $line[3];
+                if (!isset($timeIndexed[$timeKey])) {
+                    $timeIndexed[$timeKey] = array();
+                }
+                $timeIndexed[$timeKey][] = $line;
+                if (!isset($check[$line[0]])) {
+                    $check[$line[0]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]])) {
+                    $check[$line[0]][$line[1]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]][$line[2]])) {
+                    $check[$line[0]][$line[1]][$line[2]] = array();
+                }
+                $check[$line[0]][$line[1]][$line[2]][$timeKey] = true;
+            }
+            fclose($fh);
+        }
+
         if (false !== $fh) {
             while ($line = fgetcsv($fh, 2048)) {
                 foreach ($this->big5Keys AS $k) {
@@ -62,13 +86,16 @@ class CemsChiayi {
                     if (!isset($timeIndexed[$timeKey])) {
                         $timeIndexed[$timeKey] = array();
                     }
-                    $timeIndexed[$timeKey][] = array(
-                        $this->factories[$line[0]],
-                        $line[1],
-                        $this->codes[$line[2]],
-                        $timeKey,
-                        $line[4],
-                    );
+                    if (!isset($check[$this->factories[$line[0]]][$line[1]][$this->codes[$line[2]]][$timeKey])) {
+                        $check[$this->factories[$line[0]]][$line[1]][$this->codes[$line[2]]][$timeKey] = true;
+                        $timeIndexed[$timeKey][] = array(
+                            $this->factories[$line[0]],
+                            $line[1],
+                            $this->codes[$line[2]],
+                            $timeKey,
+                            $line[4],
+                        );
+                    }
                 } else {
                     print_r($line);
                 }

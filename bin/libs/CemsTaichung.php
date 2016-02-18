@@ -51,7 +51,31 @@ class CemsTaichung {
         }
         $targetFile = $targetPath . date('/Ymd', $currentTime) . '.csv';
         $dayUrl = $this->baseUrl . (date('Y', $currentTime) - 1911) . date('md', $currentTime);
-        $timeIndexed = array();
+        $timeIndexed = $check = array();
+
+        if (file_exists($targetFile)) {
+            $fh = fopen($targetFile, 'r');
+            fgetcsv($fh, 2048);
+            while ($line = fgetcsv($fh, 2048)) {
+                $timeKey = $line[3];
+                if (!isset($timeIndexed[$timeKey])) {
+                    $timeIndexed[$timeKey] = array();
+                }
+                $timeIndexed[$timeKey][] = $line;
+                if (!isset($check[$line[0]])) {
+                    $check[$line[0]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]])) {
+                    $check[$line[0]][$line[1]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]][$line[2]])) {
+                    $check[$line[0]][$line[1]][$line[2]] = array();
+                }
+                $check[$line[0]][$line[1]][$line[2]][$timeKey] = true;
+            }
+            fclose($fh);
+        }
+
         foreach ($this->factories AS $factory) {
             $data = array();
             $tmpFile = $dayPath . '/' . $factory;
@@ -111,13 +135,16 @@ class CemsTaichung {
                                 if (!preg_match('/[0-9\\.]+/', $line[$itemKey])) {
                                     $line[$itemKey] = '0';
                                 }
-                                $timeIndexed[$timeKey][] = array(
-                                    $factory,
-                                    $pol,
-                                    $itemCode,
-                                    $timeKey,
-                                    $line[$itemKey],
-                                );
+                                if (!isset($check[$factory][$pol][$itemCode][$timeKey])) {
+                                    $check[$factory][$pol][$itemCode][$timeKey] = true;
+                                    $timeIndexed[$timeKey][] = array(
+                                        $factory,
+                                        $pol,
+                                        $itemCode,
+                                        $timeKey,
+                                        $line[$itemKey],
+                                    );
+                                }
                             }
                         }
                     }
@@ -136,4 +163,3 @@ class CemsTaichung {
     }
 
 }
-

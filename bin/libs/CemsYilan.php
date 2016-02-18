@@ -23,7 +23,30 @@ class CemsYilan {
         }
         $targetFile = $targetPath . date('/Ymd', $currentTime) . '.csv';
         $dayUrl = date('Ymd', $currentTime);
-        $timeIndexed = array();
+        $timeIndexed = $check = array();
+
+        if (file_exists($targetFile)) {
+            $fh = fopen($targetFile, 'r');
+            fgetcsv($fh, 2048);
+            while ($line = fgetcsv($fh, 2048)) {
+                $timeKey = $line[3];
+                if (!isset($timeIndexed[$timeKey])) {
+                    $timeIndexed[$timeKey] = array();
+                }
+                $timeIndexed[$timeKey][] = $line;
+                if (!isset($check[$line[0]])) {
+                    $check[$line[0]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]])) {
+                    $check[$line[0]][$line[1]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]][$line[2]])) {
+                    $check[$line[0]][$line[1]][$line[2]] = array();
+                }
+                $check[$line[0]][$line[1]][$line[2]][$timeKey] = true;
+            }
+            fclose($fh);
+        }
 
         $dataTypes = array('Realtime', 'Daily');
         foreach ($this->factories AS $factory) {
@@ -62,16 +85,19 @@ class CemsYilan {
                  */
                 while ($line = fgetcsv($tmpFh, 2048)) {
                     $timeKey = substr($line[2], 0, 2) . substr($line[2], -2);
-                    if (!isset($timeIndexed[$timeKey])) {
-                        $timeIndexed[$timeKey] = array();
+                    if (!isset($check[$line[0]][$line[1]][$line[3]][$timeKey])) {
+                        if (!isset($timeIndexed[$timeKey])) {
+                            $timeIndexed[$timeKey] = array();
+                        }
+                        $check[$line[0]][$line[1]][$line[3]][$timeKey] = true;
+                        $timeIndexed[$timeKey][] = array(
+                            $line[0],
+                            $line[1],
+                            $line[3],
+                            $timeKey,
+                            $line[5],
+                        );
                     }
-                    $timeIndexed[$timeKey][] = array(
-                        $line[0],
-                        $line[1],
-                        $line[3],
-                        $timeKey,
-                        $line[5],
-                    );
                 }
             }
         }

@@ -68,10 +68,11 @@ class CemsTaipei {
                         foreach ($this->codes AS $k => $code) {
                             $v = explode('數據傳輸時間：', $cols[$k]);
                             $timeKey = $v[1];
-                            if (!isset($timeIndexed[$timeKey])) {
-                                $timeIndexed[$timeKey] = array();
-                            }
                             if (!isset($check[$fcode][$cols[0]][$code][$timeKey])) {
+                                if (!isset($timeIndexed[$timeKey])) {
+                                    $timeIndexed[$timeKey] = array();
+                                }
+                                $check[$fcode][$cols[0]][$code][$timeKey] = true;
                                 $timeIndexed[$timeKey][] = array(
                                     $fcode,
                                     $cols[0],

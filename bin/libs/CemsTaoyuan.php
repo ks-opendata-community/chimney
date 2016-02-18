@@ -74,6 +74,7 @@ class CemsTaoyuan {
                     $vcode = $this->codes[$record['desp']];
                     $timeKey = substr($record['mTime'], 0, 4);
                     if (!isset($check[$fcode][$record['dpNo']][$vcode][$timeKey])) {
+                        $check[$fcode][$record['dpNo']][$vcode][$timeKey] = true;
                         if (!isset($timeIndexed[$timeKey])) {
                             $timeIndexed[$timeKey] = array();
                         }

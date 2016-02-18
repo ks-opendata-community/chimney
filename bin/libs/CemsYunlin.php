@@ -46,7 +46,30 @@ class CemsYunlin {
             mkdir($targetPath, 0777, true);
         }
         $targetFile = $targetPath . date('/Ymd', $currentTime) . '.csv';
-        $timeIndexed = array();
+        $timeIndexed = $check = array();
+
+        if (file_exists($targetFile)) {
+            $fh = fopen($targetFile, 'r');
+            fgetcsv($fh, 2048);
+            while ($line = fgetcsv($fh, 2048)) {
+                $timeKey = $line[3];
+                if (!isset($timeIndexed[$timeKey])) {
+                    $timeIndexed[$timeKey] = array();
+                }
+                $timeIndexed[$timeKey][] = $line;
+                if (!isset($check[$line[0]])) {
+                    $check[$line[0]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]])) {
+                    $check[$line[0]][$line[1]] = array();
+                }
+                if (!isset($check[$line[0]][$line[1]][$line[2]])) {
+                    $check[$line[0]][$line[1]][$line[2]] = array();
+                }
+                $check[$line[0]][$line[1]][$line[2]][$timeKey] = true;
+            }
+            fclose($fh);
+        }
 
         foreach ($this->factories AS $fno => $pnos) {
             foreach ($pnos AS $pno) {
@@ -57,16 +80,21 @@ class CemsYunlin {
                     $cols = explode('</td>', $line);
                     if (count($cols) === 8) {
                         $timeKey = substr($cols[1], -4);
-                        if (!isset($timeIndexed[$timeKey])) {
-                            $timeIndexed[$timeKey] = array();
+                        $code = substr($cols[0], -4, 3);
+
+                        if (!isset($check[$fno][$pno][$code][$timeKey])) {
+                            if (!isset($timeIndexed[$timeKey])) {
+                                $timeIndexed[$timeKey] = array();
+                            }
+                            $check[$fno][$pno][$code][$timeKey] = true;
+                            $timeIndexed[$timeKey][] = array(
+                                $fno,
+                                $pno,
+                                $code,
+                                $timeKey,
+                                trim(strip_tags($cols[2])),
+                            );
                         }
-                        $timeIndexed[$timeKey][] = array(
-                            $fno,
-                            $pno,
-                            substr($cols[0], -4, 3),
-                            $timeKey,
-                            trim(strip_tags($cols[2])),
-                        );
                     }
                 }
             }

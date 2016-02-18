@@ -68,6 +68,7 @@ class CemsNewtaipei {
                     $vcode = $this->codes[$record['DESP']];
                     $timeKey = substr($record['M_TIME'], 0, 4);
                     if (!isset($check[$fcode][$record['DP_NO']][$vcode][$timeKey])) {
+                        $check[$fcode][$record['DP_NO']][$vcode][$timeKey] = true;
                         if (!isset($timeIndexed[$timeKey])) {
                             $timeIndexed[$timeKey] = array();
                         }
