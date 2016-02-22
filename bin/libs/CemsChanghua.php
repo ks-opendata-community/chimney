@@ -109,7 +109,7 @@ class CemsChanghua {
                         curl_setopt($ch, CURLOPT_URL, $dayUrl . '&Cno=' . $factory);
                         curl_setopt($ch, CURLOPT_POST, 1);
                         curl_setopt($ch, CURLOPT_POSTFIELDS, 'PolNo=' . $pol);
-
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , 10);
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
                         $page = curl_exec($ch);
