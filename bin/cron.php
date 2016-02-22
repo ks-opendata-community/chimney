@@ -47,15 +47,17 @@ if ($latest[0] > 0) {
 
     file_put_contents($dataPath . '/kaohsiung/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
     file_put_contents($dataPath . '/latest.csv', $c);
-    
+
     exec("rm -rf {$rootPath}/tmp");
-    $objTaichung->getDay($latest[0]);
-    $objYilan->getDay($latest[0]);
-    $objTainan->getDay($latest[0]);
-    $objChiayi->getDay($latest[0]);
-    $objYunlin->getDay($latest[0]);
-    $objChanghua->getDay($latest[0]);
 }
+
+$today = time();
+$objTaichung->getDay($today);
+$objYilan->getDay($today);
+$objTainan->getDay($today);
+$objChiayi->getDay($today);
+$objYunlin->getDay($today);
+$objChanghua->getDay($today);
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
 
