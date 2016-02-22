@@ -47,9 +47,9 @@ class CemsTainan {
         $timeIndexed = $check = array();
 
         if (file_exists($targetFile)) {
-            $fh = fopen($targetFile, 'r');
-            fgetcsv($fh, 2048);
-            while ($line = fgetcsv($fh, 2048)) {
+            $targetFh = fopen($targetFile, 'r');
+            fgetcsv($targetFh, 2048);
+            while ($line = fgetcsv($targetFh, 2048)) {
                 $timeKey = $line[3];
                 if (!isset($timeIndexed[$timeKey])) {
                     $timeIndexed[$timeKey] = array();
@@ -66,7 +66,7 @@ class CemsTainan {
                 }
                 $check[$line[0]][$line[1]][$line[2]][$timeKey] = true;
             }
-            fclose($fh);
+            fclose($targetFh);
         }
 
         if (false !== $fh) {
