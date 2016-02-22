@@ -51,7 +51,7 @@ if ($latest[0] > 0) {
     exec("rm -rf {$rootPath}/tmp");
 }
 
-$today = time();
+$today = strtotime(date('Y-m-d'));
 $objTaichung->getDay($today);
 $objYilan->getDay($today);
 $objTainan->getDay($today);
