@@ -10,7 +10,7 @@ $objYunlin = new CemsYunlin();
 $objChanghua = new CemsChanghua();
 
 $rootPath = dirname(__DIR__);
-$rawPath = '/var/www/clients/client0/web8/web';
+$rawPath = '/var/www/kh.olc.tw/web';
 $dataPath = $rootPath . '/data/daily';
 $now = date('Y-m-d H:i:s');
 
