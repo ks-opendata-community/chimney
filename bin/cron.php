@@ -8,48 +8,14 @@ $objTainan = new CemsTainan();
 $objChiayi = new CemsChiayi();
 $objYunlin = new CemsYunlin();
 $objChanghua = new CemsChanghua();
+$objKaohsiung = new CemsKaohsiung();
 
 $rootPath = dirname(__DIR__);
-$rawPath = '/var/www/kh.olc.tw/web';
 $dataPath = $rootPath . '/data/daily';
-$now = date('Y-m-d H:i:s');
+$time = time();
+$now = date('Y-m-d H:i:s', $time);
 
 exec("cd {$rootPath} && /usr/bin/git pull");
-
-$latest = array(
-    0,
-    ''
-);
-foreach (glob($rawPath . '/AVGR*.csv') AS $csvFile) {
-    $info = pathinfo($csvFile);
-    // AVGR1041201
-    $time = mktime(0, 0, 0, substr($info['filename'], 7, 2), substr($info['filename'], 9, 2), substr($info['filename'], 4, 3) + 1911);
-    if ($time > $latest[0]) {
-        $latest = array(
-            $time,
-            $csvFile
-        );
-    }
-    $targetPath = $dataPath . '/kaohsiung/' . date('Y/m', $time);
-    if (!file_exists($targetPath)) {
-        mkdir($targetPath, 0777, true);
-    }
-    $targetFile = $targetPath . '/' . date('Ymd', $time) . '.csv';
-    if (!file_exists($targetFile)) {
-        $c = str_replace(array(' '), array(''), file_get_contents($csvFile));
-        $c = implode(',', array(date('Y-m-d', $time), $time, '', '', '')) . "\n" . $c;
-        file_put_contents($targetFile, $c);
-    }
-}
-if ($latest[0] > 0) {
-    $c = str_replace(array(' '), array(''), file_get_contents($latest[1]));
-    $c = implode(',', array(date('Y-m-d', $latest[0]), $latest[0], '', '', '')) . "\n" . $c;
-
-    file_put_contents($dataPath . '/kaohsiung/' . date('Y/m/Ymd', $latest[0]) . '.csv', $c);
-    file_put_contents($dataPath . '/latest.csv', $c);
-
-    exec("rm -rf {$rootPath}/tmp");
-}
 
 $today = strtotime(date('Y-m-d'));
 $objTaichung->getDay($today);
@@ -58,6 +24,8 @@ $objTainan->getDay($today);
 $objChiayi->getDay($today);
 $objYunlin->getDay($today);
 $objChanghua->getDay($today);
+$objKaohsiung->getDay($today);
+copy($dataPath . '/kaohsiung/' . date('Y/m', $time) . '/' . date('Ymd', $time) . '.csv', $dataPath . '/latest.csv');
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
 

@@ -10,3 +10,4 @@ require_once __DIR__ . '/libs/CemsTaoyuan.php';
 require_once __DIR__ . '/libs/CemsNewtaipei.php';
 require_once __DIR__ . '/libs/CemsTaipei.php';
 require_once __DIR__ . '/libs/CemsHsinchu.php';
+require_once __DIR__ . '/libs/CemsKaohsiung.php';
