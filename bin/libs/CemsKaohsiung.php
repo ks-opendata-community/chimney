@@ -24,6 +24,10 @@ class CemsKaohsiung {
             fgetcsv($fh, 2048);
             while ($line = fgetcsv($fh, 2048)) {
                 $timeKey = $line[3];
+                $timeKeyStamp = mktime(substr($timeKey, 0, 2), substr($timeKey, 2, 2), 0, date('n', $currentTime), date('j', $currentTime), date('Y', $currentTime));
+                if ($timeKeyStamp > $currentTime) {
+                    continue;
+                }
                 if (!isset($timeIndexed[$timeKey])) {
                     $timeIndexed[$timeKey] = array();
                 }
