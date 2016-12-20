@@ -3,7 +3,7 @@
 class CemsTainan {
 
     public $rootPath, $tmpPath, $dataPath;
-    public $baseUrl = 'http://60.248.54.72/opencems/';
+    public $baseUrl = 'http://60.248.54.71/opencems/';
     public $big5Keys = array(0, 2, 5);
     public $factories = array(
         '東展興業股份有限公司' => 'R0500400',
